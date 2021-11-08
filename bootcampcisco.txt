@@ -1,0 +1,33 @@
+
+habilitando segurança de configuração no roteador
+enable dentro do roteador para entrar em modo privilegiado
+configure terminal = modo global de configuração
+enable password cisco
+ou
+enable secret cisco
+
+end para sair do config
+exit para voltar ao modo usuario que é >
+
+
+hostname R10 = botar nome no roteador
+
+line vty = são linhas para acesso remoto que pode ser via telnet ou ssh
+
+line vty 04
+password cisco
+login = para a senha ser exigida
+
+interface giga0/0 = configurando ip na interface
+	ip address 192.168.108.10 255.255.255.0
+no shutdown 
+
+
+para salvar
+RAM salva arquivo em running config
+NVram salva arquivo em startup config
+
+para salvar
+copy running-config startup-config
+wr 
+
