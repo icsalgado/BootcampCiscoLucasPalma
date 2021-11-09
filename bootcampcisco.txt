@@ -31,3 +31,94 @@ para salvar
 copy running-config startup-config
 wr 
 
+----aula 2
+MSW1
+====implementando segurança no switch====
+enable
+configure terminal
+enable secret cisco
+hostname MSW1
+
+no enable password cisco = para remover uma configuração, nesse caso a senha
+====habilitando acesso remoto para até 5 acessos
+line vty 0 4
+password cisco
+login
+
+===conceito de SVI - switched virtual interface
+	a ideia é proporcionar acesso remoto a um equipamento que trabalha em camada 2 com um ip virtual para este fim - Vlan - SVI de gerência
+
+roteador trabalha em camada 3 (fala IP)
+switch trabalha em camada 2 (fala MAC)
+
+====configurando a vlan nos switches===
+SW5
+enable
+configure terminal
+interface vlan99
+ip address 192.168.99.33 255.255.255.240
+no shutdown
+
+MSW1 - é multicamada e por padrão vem na camada 2
+
+enable
+configure terminal
+interface f0/1
+no switchport = transfoma switch multicamadas ( 2 e 3 ) em camada 3
+ip address .........
+no shutdown
+
+show ip interface brief = mostrar interfaces 
+
+enable
+configure terminal
+
+vlan 99
+name management
+
+vlan 40
+name BDG4
+
+vlan 50
+name BDG5
+
+vlan 10
+name FL1
+
+vlan 20
+name FL2
+
+vlan 30
+name FL3
+
+===configurando as portas corretas nas vlans
+	porta de acesso pode ser um pc final
+
+SW2
+enable
+configure terminal
+interface f0/3
+switchport mode access == modo acesso
+switchport acces vlan 10
+
+
+MSW1
+enable
+configure terminal
+interface f0/2
+switchport trunk encapsulation dot1q == define o protocolo do encapsulamento do tronco dot1q = 802.1q
+switchport mode trunk == modo tronco
+
+SW2
+enable
+configure terminal
+interface f0/1
+switchport mode trunk
+switchport native vlan 99
+
+===configurar static trunk uplink
+
+SW4
+interface f0/1
+switchport mode trunk
+switchport trunk native vlan 99 ==define a vlan 99 como nativa
