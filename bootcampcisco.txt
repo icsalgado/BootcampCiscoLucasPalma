@@ -153,3 +153,32 @@ ip dhcp excluded-address 192.168.50.1
 ip dhcp pool VLAN40 //esse vlan40 é apenas um nome
 network 192.168.40.0 255.255.255.0
 default-router 192.168.40.1
+
+
+------aula 4------
+===configurar dynamic routing usando OSPF ( protocolo )
+	baseado no atributo bn - bendler - velocidade lógica da interface, não é a real cerca de 10^8/bendler - é o algoritmo usado para escolher uma rota
+
+divisão de areas OSPF
+
+R7
+enable
+configure terminal
+
+route ospf 1 //configurar no router o processo ospf 1 - esse 1 é o processo 1 que foi determinado
+
+network 192.168.0.0 0.0.255.255 area 0//liga as interfaces que começam com esses bits e com a mascara coringa
+
+//hello com objetivo de fechar adjacencia com a visiança
+
+rota default - para configurar a rota da internet
+
+R7
+enable
+configure terminal
+ip route 0.0.0.0 0.0.0.0 giga0/2 // configura essa rota para todos os ips que ele não conhece
+
+essa rota estatica precisa ser compartilhada com os outros roteados atraves do ospf 
+
+router ospf 1
+default-information originate //tendo uma rota default ele injeta dentro da area 0 
