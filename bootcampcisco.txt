@@ -122,3 +122,34 @@ SW4
 interface f0/1
 switchport mode trunk
 switchport trunk native vlan 99 ==define a vlan 99 como nativa
+
+-----aula 3-----
+==configurar inter-vlan routing
+
+router in sticky
+
+show ip route ==mostra as rotas que o switch conhece o endereço ip
+
+R9
+enable
+configure terminal
+interface giga0/0
+
+no shutdown
+interface giga0/0.40 //configurando subinterfaces
+encapsulation dot1q 40 //usando a vlan40 quando for nativa usar o native
+ip address .....
+
+
+DHCP server no R9
+importante excluir o ip do roteador para não ser alocado para um pc
+
+R9
+enable
+configure terminal
+ip dhcp excluded-address 192.168.40.1
+ip dhcp excluded-address 192.168.50.1
+
+ip dhcp pool VLAN40 //esse vlan40 é apenas um nome
+network 192.168.40.0 255.255.255.0
+default-router 192.168.40.1
